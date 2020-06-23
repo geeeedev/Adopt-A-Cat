@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Cat</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div class="container">
+        <ul class="nav justify-content-center">
+            <li class="nav-item">
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/success">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+
+        {% if messages %}
+        <ul class="list-unstyled text-danger">
+            {% for msg in messages %}
+            <li>{{msg}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <div class="card border-info">
+            <h5 class="card-header text-info text-center">
+                Add a Cat
+            </h5>
+            <form action="/cat/create" method="post">
+                {%csrf_token%}
+                <div class="card-body text-info">
+
+                    <div class=" form-group">
+                        <label>Name:</label>
+                        <input type="text" name="name" class="form-control" placeholder="">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label>Age:</label>
+                            <input type="number" name="age" class="form-control " placeholder="" value=1>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Weight</label>
+                            <input type="float" name="weight" class="form-control " placeholder="" value=9>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Birthdate</label>
+                            <input type="date" name="bdate" class="form-control " placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Bio:</label>
+                        <input type="text" name="bio" class="form-control" placeholder="Bio">
+                    </div>
+                    <div class=" form-group">
+                        <label>Profile Pic URL:</label>
+                        <input type="url" name="url" class="form-control" placeholder="URL">
+                    </div>
+
+                    <div class=" form-group">
+                        <label>Traits:</label>
+                        {% for trait in allTraits %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="chbxTrait" value={{trait.id}}>
+                            <label class="form-check-label">{{trait.name}}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class=" form-group">
+                        <label>Other Trait:</label>
+                        <input type="text" name="otherTrait" class="form-control" placeholder="">
+                    </div>
+                    <!-- Playing with using dropdown multi-select - this works but commented out to avoid confusion
+                    <div class=" form-group">
+                        <select multiple name="drpdwnTrait" class="form-group custom-select">
+                            {% for trait in allTraits %}
+                            <option value="{{trait.id}}">{{trait.name}}</option>
+                            {%endfor%}
+                        </select>
+                    </div> -->
+                    
+                </div>
+                <div class="card-footer text-center">
+                    <button type="submit" class="btn btn-info">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

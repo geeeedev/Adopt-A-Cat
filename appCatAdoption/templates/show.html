@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Profile</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div class="container pt-5 ">
+        <div class="row d-flex justify-content-around ">
+            <h4>Welcome, {{currUser.firstnm}}!</h4>
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/success">Home</a>
+                </li>
+                {% if cat.fosteredby.id == request.session.currUserID %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/cat/{{cat.id}}/edit">Edit</a>
+                </li>
+                {% endif %} 
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card mx-auto border-info mt-5 mb-3 " style="max-width: 50rem;">
+            <h5 class="card-header text-info">{{cat.name}}</h5>
+            <div class="card-body text-info ">
+                
+                <p class="card-text">ID: {{cat.id}}</p>
+                <p class="card-text">Age: {{cat.age}}</p>
+                <p class="card-text">Weight: {{cat.weight}}</p>
+                <p class="card-text">Birthdate: {{cat.birthdate|date:'M d, Y'}}</p>
+                <p class="card-text">Bio: {{cat.bio}}</p>
+                <p class="card-text">Adopted: 
+                    {% if cat.isAdopted == True %}
+                    Yes
+                    {%else%}
+                    No
+                    {% endif %}
+                </p>
+                <p class="card-text">Fostered By: {{cat.fosteredby.firstnm}} {{cat.fosteredby.lastnm}}</p>
+                {% if cat.traits.all %}
+                <p class="card-text">Traits: </p>
+                <ul>
+                    {% for t in cat.traits.all %}
+                    <li>{{t.name}}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+
+                {% if cat.profilePic %}
+                    <img class="card-img-bottom" src="{{cat.profilePic}}" alt="Cat Profile Picture">
+                {% endif %}
+            </div>
+        </div>
+        
+    </div>
+
+
+
+</body>
+
+</html>

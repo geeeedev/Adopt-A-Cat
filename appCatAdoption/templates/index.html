@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Prep - Cat Adoption</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body>
+    <!-- Cat Adoption - Registration & Login -->
+    <div class="container pt-5">
+        {% if messages %}
+        <ul class="list-unstyled text-danger">
+            {% for msg in messages %}
+            <li>{{msg}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div class="row">
+            <div class="col">
+                <form action="/register" method="post">
+                    {%csrf_token%}
+                    <div class="card ">
+                        <h5 class="card-header ">Registration</h5>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="card-title">First Name:</label>
+                                <input type="text" name="firstnm" class="form-control" value="Gwennie">
+                            </div>
+                            <div class="form-group">
+                                <label class="card-title">Last Name:</label>
+                                <input type="text" name="lastnm" class="form-control" value="Lau">
+                            </div>
+                            <div class="form-group">
+                                <label class="card-title">Email:</label>
+                                <input type="text" name="email" class="form-control" value="g@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label class="card-title">Password:</label>
+                                <input type="password" name="pswd" class="form-control" value="testingOnly">
+                            </div>
+                            <div class="form-group">
+                                <label class="card-title">Confirm Password:</label>
+                                <input type="password" name="cfpswd" class="form-control" value="testingOnly">
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-secondary">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col">
+                <form action="/login" method="post">
+                    {%csrf_token%}
+                    <div class="card">
+                        <h5 class="card-header">Log In</h5>
+                        <div class="card-body ">
+                            <div class="form-group">
+                                <label class="card-title">Email:</label>
+                                <input type="text" name="email" class="form-control" value="g@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label class="card-title">Password:</label>
+                                <input type="password" name="pswd" class="form-control" value="testingOnly">
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-secondary">Log In</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div> <!-- row -->
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,6 @@
+.vscode/
+veDjango/
+__pycache__/
+db.sqlite3
+.DS_Store
+# requirements.txt

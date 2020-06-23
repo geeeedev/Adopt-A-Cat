@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Successful!</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container pt-5">
+        <div class="row justify-content-center">
+            <h4>Welcome, {{currUser.firstnm}}!</h4>
+        </div>
+        <ul class="nav justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link" href="/cat/new">Create</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/traits">Traits</a>
+            </li>
+        </ul>
+
+
+        <div class="row mt-5">
+            <div class="col-md">  <!-- Adopted -->
+                <h5 class="text-center">Adopted</h5>
+                <table class="table table-striped">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Weight</th>
+                            <th scope="col">Birthdate</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cat in adoptedCat %}
+                        <tr>
+                            <th scope="row">{{cat.id}}</th>
+                            <td>{{cat.name}}</td>
+                            <td>{{cat.age}}</td>
+                            <td>{{cat.weight}}</td>
+                            <td>{{cat.birthdate|date:'m/d/Y'}}</td>
+                            <td>
+                                <a href="/cat/{{cat.id}}">Profile</a> |
+                                <a href="/cat/{{cat.id}}/toggle">Unadopted</a><br>
+                                {% if cat.fosteredby.id == request.session.currUserID %}
+                                <a href="/cat/{{cat.id}}/edit">Edit</a> |
+                                <a href="/cat/{{cat.id}}/delete">Delete</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-md">   <!-- Not Adopted -->
+                <h5 class="text-center">Not Adopted</h5>
+                <table class="table table-striped">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Weight</th>
+                            <th scope="col">Birthdate</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cat in notAdoptedCat %}
+                        <tr>
+                            <th scope="row">{{cat.id}}</th>
+                            <td>{{cat.name}}</td>
+                            <td>{{cat.age}}</td>
+                            <td>{{cat.weight}}</td>
+                            <td>{{cat.birthdate|date:'m/d/Y'}}</td>
+                            <td>
+                                <a href="/cat/{{cat.id}}">Profile</a> |
+                                <a href="/cat/{{cat.id}}/toggle">Adopted</a><br>
+                                {% if cat.fosteredby.id == request.session.currUserID %}
+                                <a href="/cat/{{cat.id}}/edit">Edit</a> |
+                                <a href="/cat/{{cat.id}}/delete">Delete</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Update Cat</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+</head>
+
+<body>
+  <div class="container">
+    <ul class="nav justify-content-center">
+      <li class="nav-item">
+        <a class="nav-link" href="/success">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cat/{{cat.id}}">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+    </ul>
+
+    {% if messages %}
+    <ul class="list-unstyled text-danger">
+      {% for msg in messages %}
+      <li>{{msg}}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    <div class="card border-info">
+      <h5 class="card-header text-info text-center">
+        Update Cat
+      </h5>
+      <form action="/cat/{{cat.id}}/update" method="post">
+        {%csrf_token%}
+        <div class="card-body text-info">
+          <!-- <input type="hidden" name="id" value={{cat.id}}>  hidden INSIDE form ; use if no id in route -->
+
+          <div class="form-group">
+            <label>Name:</label>
+            <input type="text" name="name" class="form-control" value="{{cat.name}}" />
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label>Age:</label>
+              <input type="number" name="age" class="form-control" value="{{cat.age}}" />
+            </div>
+            <div class="form-group col-md-4">
+              <label>Weight</label>
+              <input type="float" name="weight" class="form-control" value="{{cat.weight}}" />
+            </div>
+            <div class="form-group col-md-4">
+              <label>Birthdate</label>
+              <input type="date" name="bdate" class="form-control " value={{cat.birthdate|date:'Y-m-d'}}>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Bio:</label>
+            <input type="text" name="bio" class="form-control" value="{{cat.bio}}" />
+          </div>
+          <div class="form-group">
+            <label>Profile Pic URL:</label>
+            <input type="url" name="url" class="form-control" value="{{cat.profilePic}}" />
+          </div>
+          <div class="form-group">
+            <label>Traits:</label>
+            {% for trait in allTraits %}
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="chbxTrait" value={{trait.id}}
+                {% for t in cat.traits.all %} 
+                  {% if t.id == trait.id %} 
+                    checked 
+                  {% endif %} 
+                {% endfor %}>
+              <label class="form-check-label">{{trait.name}}</label>
+            </div>
+            {% endfor %}
+          </div>
+          <div class="form-group">
+            <label>Other Trait:</label>
+            <input type="text" name="otherTrait" class="form-control" />
+          </div>
+          <!-- play around: below code block uses multi-select to display/update traits as another option
+                    <div class=" form-group">
+                        <select multiple name="drpdwnTrait" class="form-group custom-select">
+                            {% for trait in allTraits %}
+                            <option value="{{trait.id}}"
+                            {% for t in cat.traits.all %}
+                                {% if t.id == trait.id %}
+                                    selected
+                                {% endif %}
+                            {% endfor %}
+                            >{{trait.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div> -->
+        </div>
+        <div class="card-footer text-center">
+          <button type="submit" class="btn btn-info">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>
